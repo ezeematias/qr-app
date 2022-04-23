@@ -9,7 +9,7 @@ const IndexScreen = () => {
 
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
-    const handlerSignUp = () => {  
+    const handlerSignUp = () => {
         navigation.replace('SignUp');
     }
 
@@ -17,33 +17,36 @@ const IndexScreen = () => {
         navigation.replace('Login');
     }
 
-    return (   
-        <View style={styles.container}> 
-            <Image 
-                source={require('../assets/lente.png')}
-                resizeMode="contain"                 
-                style={styles.logo} 
-            />   
-
-            <View style={styles.buttonContainer} >   
+    return (
+        <View style={styles.container}>
+            <View style={styles.buttonContainer} >
                 <TouchableOpacity
-                    onPress={handlerSingIn}                   
+                    onPress={handlerSingIn}
 
                     style={styles.button}
-                    >
+                >
                     <Text style={styles.buttonText}>Iniciar Sesión</Text>
                 </TouchableOpacity>
-                
+            </View>
+            <Image
+                source={require('../assets/qr.png')}
+                resizeMode="contain"
+                style={styles.logo}
+            />
+
+            <View style={styles.buttonContainer} >
+
+
                 <TouchableOpacity
                     onPress={handlerSignUp}
                     style={[styles.button, styles.buttonOutline]}
-                    >
+                >
                     <Text style={styles.buttonOutlineText}>Registrarse</Text>
                 </TouchableOpacity>
-            </View>              
-        </View> 
-         
+            </View>
+        </View>
+
     );
 }
-        
+
 export default IndexScreen

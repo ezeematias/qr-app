@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
 
-const primaryColor = '#f0f0f0';
-const secondaryColor = '#ea5051';
-const tertiaryColor = '#a6c2d6';
-const fourthColor = '#232e5c';
-const buttonBorderRadius = 100;
+const primaryColor = '#ffffff';
+const secondaryColor = '#3176bb';
+const tertiaryColor = '#b9b9b9';
+const fourthColor = '#3176bb';
+const buttonBorderRadius = 30;
 
 export default StyleSheet.create({
 
@@ -16,7 +16,7 @@ export default StyleSheet.create({
     },
     logo: {
         width: '100%',
-        height: '30%',
+        height: '40%',
     },
     logoHome: {
         width: '100%',
@@ -43,11 +43,12 @@ export default StyleSheet.create({
         marginTop: '5%',
     },
     button: {
-        backgroundColor: fourthColor,
-        width: '100%',
-        padding: 10,
+        backgroundColor: tertiaryColor,
+        width: '80%',
+        padding: 40,
         borderRadius: buttonBorderRadius,
         alignItems: 'center',
+        marginBottom: '8%',
     },
     buttonRole: {
         backgroundColor: secondaryColor,
@@ -67,7 +68,7 @@ export default StyleSheet.create({
         backgroundColor: primaryColor,
         marginTop: 5,
         borderColor: fourthColor,
-        borderWidth: 2,
+        borderWidth: 10,
     },
     buttonOutlineRole: {
         backgroundColor: secondaryColor,

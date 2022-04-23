@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Camara",
-    "slug": "Camara",
+    "name": "QrCode",
+    "slug": "QrCode",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,7 +24,7 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.essee.Camara"
+      "package": "com.essee.QrCode"
     }
   }
 }

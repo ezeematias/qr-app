@@ -84,7 +84,7 @@ const LoginScreen = () => {
                     />
                 </View>}
                 <Image
-                    source={require('../assets/lente.png')}
+                    source={require('../assets/qr.png')}
                     resizeMode="contain"
                     style={styles.logo}
                 />
