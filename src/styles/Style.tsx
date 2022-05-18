@@ -5,15 +5,20 @@ const secondaryColor = '#3176bb';
 const tertiaryColor = '#b9b9b9';
 const fourthColor = '#3176bb';
 const buttonBorderRadius = 30;
+const buttonBorderRadiusImput = 20;
 
 export default StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor: primaryColor,
+        backgroundColor: 'transparent',
         alignItems: 'center',
         justifyContent: 'center',
     },
+    image: {
+        flex: 1,
+        justifyContent: "center"
+    }, 
     logo: {
         width: '100%',
         height: '40%',
@@ -21,7 +26,7 @@ export default StyleSheet.create({
     logoHome: {
         width: '100%',
         height: '20%',
-        marginTop: '10%',
+        marginTop: '5%',
     },
     inputContainer: {
         width: '80%',
@@ -31,9 +36,9 @@ export default StyleSheet.create({
         backgroundColor: primaryColor,
         paddingHorizontal: 15,
         paddingVertical: 10,
-        borderRadius: buttonBorderRadius,
-        borderBottomColor: fourthColor,
-        borderBottomWidth: 2,
+        borderRadius: buttonBorderRadiusImput,
+        borderColor: fourthColor,
+        borderWidth: 5,
         marginTop: '5%',
     },
     buttonContainer: {
@@ -43,15 +48,23 @@ export default StyleSheet.create({
         marginTop: '5%',
     },
     button: {
-        backgroundColor: tertiaryColor,
+        backgroundColor: secondaryColor,
         width: '80%',
         padding: 40,
         borderRadius: buttonBorderRadius,
         alignItems: 'center',
         marginBottom: '8%',
     },
-    buttonRole: {
+    buttonLogin: {
         backgroundColor: secondaryColor,
+        width: '100%',
+        padding: 20,
+        borderRadius: buttonBorderRadiusImput,
+        alignItems: 'center',
+        
+    },
+    buttonRole: {
+        backgroundColor: tertiaryColor,
         width: '100%',
         padding: 5,
         borderRadius: buttonBorderRadius,
@@ -61,7 +74,7 @@ export default StyleSheet.create({
         backgroundColor: secondaryColor,
         width: '100%',
         padding: 15,
-        borderRadius: buttonBorderRadius,
+        borderRadius: buttonBorderRadiusImput,
         alignItems: 'center',
     },
     buttonOutline: {
@@ -70,11 +83,15 @@ export default StyleSheet.create({
         borderColor: fourthColor,
         borderWidth: 10,
     },
-    buttonOutlineRole: {
-        backgroundColor: secondaryColor,
+    buttonOutlineLogin: {
+        backgroundColor: primaryColor,
         marginTop: 5,
-        borderColor: secondaryColor,
-        borderWidth: 2,
+        borderColor: fourthColor,
+        borderWidth: 5,
+    },
+    buttonOutlineRole: {
+        backgroundColor: tertiaryColor,
+        marginTop: 2,
     },
     buttonText: {
         color: primaryColor,
@@ -87,7 +104,7 @@ export default StyleSheet.create({
         fontSize: 16,
     },
     buttonOutlineTextRole: {
-        color: primaryColor,
+        color: secondaryColor,
         fontWeight: '700',
         fontSize: 16,
     },

@@ -1,8 +1,8 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Image, ImageBackground } from "react-native";
 import { auth } from "../database/firebase";
-import  styles from "../styles/Style";
+import styles from "../styles/Style";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { RootStackParamList } from "../../App";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -38,11 +38,11 @@ const LoginScreen = () => {
                     case 'auth/user-not-found':
                     case 'auth/wrong-password':
                     case 'auth/internal-error':
-                    case 'auth/too-many-requests':                        
+                    case 'auth/too-many-requests':
                         setMessageError("Credenciales inválidas");
                         break;
-                    default:                        
-                        setMessageError(error.message);                        
+                    default:
+                        setMessageError(error.message);
                         break;
                 }
             }).finally(() => { setLoading(false) });
@@ -52,21 +52,21 @@ const LoginScreen = () => {
         setMessage(message);
         setTimeout(() => {
             setMessage("");
-        }, 3000); 
+        }, 3000);
     }
 
-    const guestLogin = () => {        
+    const guestLogin = () => {
         setEmail("invitado@gmail.com");
         setPassword("123456");
     }
-    
+
     const adminLogin = () => {
-        setEmail("admin@gmail.com");
+        setEmail("admin@monsters.com");
         setPassword("123456");
     }
-    
+
     const supplierLogin = () => {
-        setEmail("proveedores@gmail.com");
+        setEmail("usuario@monsters.com");
         setPassword("123456");
     }
 
@@ -75,8 +75,9 @@ const LoginScreen = () => {
     }
 
     return (
-        
-        <View style={styles.container}>
+        <ImageBackground source={require('../../assets/background.jpg')} resizeMode="repeat" style={styles.image}>
+
+            <View style={styles.container}>
                 {loading && <View style={styles.spinContainer}>
                     <Spinner
                         visible={loading}
@@ -86,7 +87,7 @@ const LoginScreen = () => {
                 <Image
                     source={require('../assets/qr.png')}
                     resizeMode="contain"
-                    style={styles.logo}
+                    style={styles.logoHome}
                 />
 
                 <View style={styles.inputContainer}>
@@ -115,14 +116,14 @@ const LoginScreen = () => {
                     <TouchableOpacity
                         onPress={handlerLogin}
 
-                        style={styles.button}
+                        style={styles.buttonLogin}
                     >
                         <Text style={styles.buttonText}>Iniciar Sesión</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         onPress={handlerBack}
-                        style={[styles.button, styles.buttonOutline]}
+                        style={[styles.buttonLogin, styles.buttonOutlineLogin]}
                     >
                         <Text style={styles.buttonOutlineText}>Volver</Text>
                     </TouchableOpacity>
@@ -146,9 +147,10 @@ const LoginScreen = () => {
                         style={[styles.buttonRole, styles.buttonOutlineRole]}
                     >
                         <Text style={styles.buttonOutlineTextRole}>Proveedores</Text>
-                    </TouchableOpacity>   
-                </View>                
-            </View>        
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </ImageBackground>
     );
 }
 export default LoginScreen
