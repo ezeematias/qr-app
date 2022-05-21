@@ -62,6 +62,14 @@ export default StyleSheet.create({
         alignItems: 'center',
         marginBottom: '8%',
     },
+    buttonHome: {
+        backgroundColor: secondaryColor,
+        width: '80%',
+        padding: 10,
+        borderRadius: buttonBorderRadius,
+        alignItems: 'center',
+        marginBottom: '8%',
+    },
     buttonLogin: {
         backgroundColor: secondaryColor,
         width: '100%',
@@ -78,17 +86,24 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
     buttonError: {
-        backgroundColor: secondaryColor,
+        backgroundColor: 'red',
         width: '100%',
         padding: 15,
         borderRadius: buttonBorderRadiusImput,
         alignItems: 'center',
+        marginBottom: 5,
     },
     buttonOutline: {
         backgroundColor: primaryColor,
         marginTop: 5,
         borderColor: fourthColor,
         borderWidth: 10,
+    },
+    buttonOutlinehome: {
+        backgroundColor: primaryColor,
+        marginTop: 5,
+        borderColor: fourthColor,
+        borderWidth: 5,
     },
     buttonOutlineLogin: {
         backgroundColor: primaryColor,
@@ -131,7 +146,13 @@ export default StyleSheet.create({
     },
     textHome:{
         fontSize: 60,
-        marginTop: 40, 
+        marginTop: 5, 
+        color: secondaryColor,
+        fontWeight: 'bold',        
+    },
+    textTitleHome:{
+        fontSize: 30,
+        marginTop: 5, 
         color: secondaryColor,
         fontWeight: 'bold',        
     },

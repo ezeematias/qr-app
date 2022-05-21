@@ -1,12 +1,14 @@
 import { useNavigation } from "@react-navigation/core";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image, ImageBackground } from "react-native";
 import { auth } from "../database/firebase";
 import styles from "../styles/Style";
-import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { RootStackParamList } from "../../App";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Spinner from "react-native-loading-spinner-overlay/lib";
+
+export let admin = false;
 
 const LoginScreen = () => {
     const [email, setEmail] = useState("");
@@ -50,16 +52,19 @@ const LoginScreen = () => {
     const guestLogin = () => {
         setEmail("invitado@gmail.com");
         setPassword("123456");
+        admin = false;
     }
 
     const adminLogin = () => {
         setEmail("admin@monsters.com");
         setPassword("123456");
+        admin = true;
     }
 
     const supplierLogin = () => {
         setEmail("usuario@monsters.com");
         setPassword("123456");
+        admin = false;
     }
 
     const handlerBack = () => {

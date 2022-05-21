@@ -1,13 +1,15 @@
 import { useNavigation } from '@react-navigation/core';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay/lib';
+
 import { RootStackParamList } from '../../App';
 import { auth, db } from "../database/firebase";
 import styles from '../styles/Style';
+import * as app from '../screens/LoginScreen';
 
 type User = {
     q10: number,
@@ -20,68 +22,44 @@ type User = {
 const HomeScreen = () => {
 
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+    let admin = app.admin;
 
     const [loading, setLoading] = useState(true);
     const [scanData, setScanData] = useState<string>("");
     const [permission, setPermission] = useState(true);
-    const [goScanner, setGoScanner] = useState(false);
-    const [salary, setSalary] = useState<number>(0);
+    const [goScanner, setGoScanner] = useState(false);  
     const [message, setMessage] = useState("");
-    const [q10, setQ10] = useState<number| undefined>();
-    const [q50, setQ50] = useState<number| undefined>();
-    const [q100, setQ100] = useState<number | undefined>();
-    const [admin, setAdmin] = useState(false);
-    const email = auth?.currentUser?.email || "";
-
-    const [user, setUser] = useState<User>({ q10: 0, q50: 0, q100: 0, admin: false, salary: 0});
+ 
+    const email = auth?.currentUser?.email || "";    
+    
+    const [user, setUser] = useState<User>({ q10: 0, q50: 0, q100: 0, admin: admin, salary: 0});
     
     useEffect(() => {
         setLoading(true);
         requestCameraPermission();
-        //getDocUser().then(() => { }).catch(() => {}).finally(() => { setLoading(false) });
-        //getDocUser().then(() => { }).catch(() => { setDoc(doc(db, "qr", email), user).catch((error: any) => alert(error.message)).finally(() => { });}).finally(() => { setLoading(false) });
+        getDocUser();
     }, []);
 
-    function settingSalary(item: number) {
+    const settingSalary = (item: number) =>{
         console.log("settingSalary", item);
         if (item === 10) {
-           // user.q10 === 0 || user.admin && user.q10 < 2 ? setUser(() => ({ ...user, q10: user.q10 + 1, salary: user.salary + item })) : console.log("NOOOOO"), setMessage("Ya se utilizó este código");
-           console.log(q10);
-           console.log(salary);
-           setQ10(1);
-           setSalary(item);
-           console.log("ENTREEEEEEEEEE");
-           console.log(q10);
-           console.log(salary);
+           user.q10 === 0 || admin && user.q10 < 2 ? setUser(() => ({ ...user, q10: user.q10 + 1, salary: user.salary + item })) : setMessageError("Ya se utilizó este código");
         }
 
         if (item === 50) {
-            user.q50 === 0 || user.admin && user.q50 < 2 ? setUser(() => ({ ...user, q50: user.q50 + 1, salary: user.salary + item })) : setMessage("Ya se utilizó este código");
-
+          user.q50 === 0 || admin && user.q50 < 2 ? setUser(() => ({ ...user, q50: user.q50 + 1, salary: user.salary + item })) : setMessageError("Ya se utilizó este código");
         }
 
         if (item === 100) {
-            user.q100 === 0 || user.admin && user.q100 < 2 ? setUser(() => ({ ...user, q100: user.q100 + 1, salary: user.salary + item })) : setMessage("Ya se utilizó este código");
-
-        }
-        setUser({ q10: q10, q50: q50, q100: q100, admin: admin, salary: salary });
-        console.log("Q10 " + user.q10 + "| Q50 " + user.q50 + "| Q100 " + user.q100 + "| Salary " + user.salary);
-        setDocument();
-    }
-
-    const charge = () => {
-        const user = {
-            q10: q10,
-            q50: q50,
-            q100: q100,
-            admin: admin,
-            salary: salary
-        }
-        return user;
+            user.q100 === 0 || admin && user.q100 < 2 ? setUser(() => ({ ...user, q100: user.q100 + 1, salary: user.salary + item })) : setMessageError("Ya se utilizó este código");
+        }        
     }
 
     const setDocument = () => {
-        setDoc(doc(db, "qr", email), charge()).catch((error: any) => alert(error.message)).finally(() => { });
+        setDoc(doc(db, "qr", email), user).catch((error: any) => alert(error.message)).finally(() => { });
+    }
+    const handlerReset = () => {
+        setUser(() => ({ q10: 0, q50: 0, q100: 0, admin: false, salary: 0 }));       
     }
 
     const getDocUser = async () => {
@@ -96,10 +74,17 @@ const HomeScreen = () => {
         })
     }
 
+    const setMessageError = (message: string) => {
+        setMessage(message);
+        setTimeout(() => {
+            setMessage("");
+        }, 3000);
+    }
+
     async function handlerSingOut() {
         await auth
             .signOut()
-            .then(() => { navigation.replace('Index') })
+            .then(() => { navigation.replace('Index') , setDocument();})
             .catch((error: any) => alert(error.message))
     }
 
@@ -143,9 +128,8 @@ const HomeScreen = () => {
             case '2786f4877b9091dcad7f35751bfcf5d5ea712b2f':
                 settingSalary(100);
                 break;
-            default:
-                //setSalary(99999);
-                //serMessageError('Código QR inválido');
+            default:                
+                setMessageError('Código QR inválido');
                 break;
         }
         setScanData("");
@@ -156,9 +140,8 @@ const HomeScreen = () => {
         return (
             <BarCodeScanner
                 style={[styles.container]}
-                onBarCodeScanned={({ type, data }) => {
-                    try {
-                        console.log("L-" + data);
+                onBarCodeScanned={({ data }) => {
+                    try {  
                         setScanData(data.trim());
                     } catch (error) {
                         console.log('Error: ', error);
@@ -179,26 +162,35 @@ const HomeScreen = () => {
                         textStyle={styles.spinnerTextStyle}
                     />
                 </View>}
-                <View style={styles.container}>
+                <View style={styles.container}>            
 
-                    <Text style={styles.textHome}>¡Bienvenido!</Text>
-                    {/* <Text style={styles.textDescription}>Escanemos es QR</Text> */}
-                    <Text style={styles.buttonOutlineTextRole}>Tu saldo es</Text>
-                    {/* <Text style={styles.textHome}>{user.salary}</Text> */}
-                    <Text style={styles.textHome}>{salary}</Text>
-
+                    <Text style={styles.textTitleHome}>¡Hola {auth?.currentUser?.displayName}!</Text>
+                    <Text style={styles.textTitleHome}>Tu saldo disponible es:</Text>
+                    <Text style={styles.textHome}>${user.salary}</Text>
                     <View style={styles.buttonContainer} >
+                {!!message ? <TouchableOpacity
+                        style={styles.buttonError}
+                        onPress={() => setMessage("")}
+                    >
+                        <Text style={styles.buttonText}>{message}</Text>
+                    </TouchableOpacity> : null}
                         <TouchableOpacity
                             onPress={() => setGoScanner(true)}
-                            style={styles.button}
+                            style={styles.buttonHome}
                         >
                             <Text style={styles.buttonText}>Escanear</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => handlerSingOut()}
-                            style={styles.button}
+                            style={[styles.buttonHome, styles.buttonOutlinehome]}
                         >
-                            <Text style={styles.buttonText}>Salir</Text>
+                            <Text style={styles.buttonOutlineText}>Salir</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => handlerReset()}
+                            style={styles.buttonHome}
+                        >
+                            <Text style={styles.buttonText}>Restaurar Salario</Text>
                         </TouchableOpacity>
                     </View>
                     <Image
@@ -211,6 +203,5 @@ const HomeScreen = () => {
         )
     }
     return (null)
-
 }
 export default HomeScreen;
