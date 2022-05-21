@@ -18,15 +18,6 @@ const SignScreen = () => {
 
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                navigation.replace('Home');
-            }
-        })
-        return unsubscribe;
-    }, []);
-
     const handlerSingUp = async () => {
         if (displayName === "" || email === "" || password === "" || rePassword === "") {
             setMessageError("Todos los campos son obligatorios");
@@ -35,6 +26,7 @@ const SignScreen = () => {
             await createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential: { user: any; }) => {
                     userCredential.user
+                    navigation.replace('Home');
                 })
                 .catch(error => {
                     switch (error.code) {

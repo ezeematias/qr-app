@@ -16,21 +16,13 @@ const LoginScreen = () => {
 
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                navigation.replace('Home');
-            }
-        })
-        return unsubscribe;
-    }, []);
-
     const handlerLogin = async () => {
         setLoading(true);
         await signInWithEmailAndPassword(auth, email, password)
             .then((userCredential: { user: any; }) => {
                 const user = userCredential.user;
                 console.log("Logged in with", user.email);
+                navigation.replace('Home');
             })
             .catch(error => {
                 switch (error.code) {

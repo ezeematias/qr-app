@@ -15,6 +15,13 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    container2: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        backgroundColor: 'transparent',
+        alignItems: 'center',
+    },
     image: {
         flex: 1,
         justifyContent: "center"
@@ -135,7 +142,15 @@ export default StyleSheet.create({
         fontWeight: 'bold',  
         textAlign: 'center',
         margin: 5,
-    },   
+    }, 
+    qrArea:{
+        width: 200,
+        height: 200,
+        borderColor: '#fff',
+        borderWidth: 2,
+        borderRadius: 30,
+    } 
+ 
 
     
 })
